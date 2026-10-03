@@ -1,0 +1,5 @@
+BACKUPS/
+BACKUP_ASISTENCIA_*
+~\$*
+*.tmp
+__pycache__/
