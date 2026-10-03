@@ -1,0 +1,50 @@
+==============================================================================
+ CÓMO USAR ESTE ARCHIVO  (eventos del libro)
+------------------------------------------------------------------------------
+ El código de ThisWorkbook NO se importa como módulo (eso crea "ThisWorkbook1"
+ y los eventos no se ejecutan). Se PEGA dentro del objeto ThisWorkbook real:
+
+ 1. Si ya importó "ThisWorkbook" o "ThisWorkbook1" como módulo:
+    - En el editor VBA (Alt+F11), en el árbol de la izquierda, haga clic
+      derecho sobre ese módulo (ThisWorkbook1) -> "Quitar ThisWorkbook1..."
+      -> cuando pregunte si desea exportar, elija NO.
+ 2. En el árbol, bajo "Microsoft Excel Objetos", haga doble clic en
+    "ThisWorkbook" (el verdadero, SIN número).
+ 3. Borre lo que haya en esa ventana y PEGUE TODO lo que está debajo de la
+    línea "---- COPIE DESDE AQUÍ ----" (NO copie esa línea).
+ 4. Menú Depuración -> Compilar VBAProject. No debe haber errores.
+==============================================================================
+---- COPIE DESDE AQUÍ ----
+Option Explicit
+'==============================================================================
+' ThisWorkbook  -  Eventos del libro
+'  Al abrir: muestra el MENU, oculta hojas tecnicas, actualiza tablero y
+'  detecta cambio de periodo. Al cerrar: avisa si hay cambios sin guardar.
+'==============================================================================
+
+Private Sub Workbook_Open()
+    On Error Resume Next
+    Application.ScreenUpdating = False
+    If ExisteHoja(SH_MENU) Then
+        modPrincipal.OcultarTecnicas
+        modPrincipal.ActualizarTablero
+        modPrincipal.DetectarNuevoPeriodo
+        ThisWorkbook.Worksheets(SH_MENU).Activate
+    End If
+    Application.ScreenUpdating = True
+    On Error GoTo 0
+End Sub
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    On Error Resume Next
+    If Not ThisWorkbook.Saved Then
+        Dim r As VbMsgBoxResult
+        r = MsgBox("Existen cambios pendientes de guardar. Desea guardar antes de salir?", _
+                   vbQuestion + vbYesNoCancel, "Cerrar")
+        Select Case r
+            Case vbYes: ThisWorkbook.Save
+            Case vbCancel: Cancel = True
+        End Select
+    End If
+    On Error GoTo 0
+End Sub

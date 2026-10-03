@@ -65,7 +65,9 @@ Módulos VBA: `modInstalador`, `modPrincipal`, `modConfiguracion`, `modImportaci
 ## 3. Puesta en marcha rápida
 
 1. Abra `dist/SISTEMA_ASISTENCIA_AUDICONTA.xlsx` en Excel y **Guardar como → Libro habilitado para macros (`.xlsm`)**.
-2. `Alt + F11` → menú **Archivo → Importar archivo…** → importe todos los `vba/*.bas` y `vba/ThisWorkbook.cls`.
+2. `Alt + F11` → menú **Archivo → Importar archivo…** → importe **solo** los `vba/mod*.bas`.
+   El código de eventos NO se importa: se **pega** dentro del objeto `ThisWorkbook` real
+   (use `vba/ThisWorkbook_PEGAR_AQUI.txt`). **No importe `ThisWorkbook.cls`** (crea `ThisWorkbook1` y falla).
 3. `Alt + F8` → ejecute **`INSTALAR`**.
 4. Ejecute **`PRUEBAS_UNITARIAS`** para confirmar la lógica (los 16 casos del requisito 58).
 5. Listo: trabaje desde el menú.

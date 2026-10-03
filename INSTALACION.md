@@ -24,14 +24,21 @@ Tiempo estimado: **10 minutos**. No necesita saber programar.
 ## Paso 2. Importar el código VBA
 1. Con el `.xlsm` abierto, pulse **`Alt + F11`** (abre el editor de VBA).
 2. Menú **Archivo → Importar archivo…** (o `Ctrl + M`).
-3. Importe **uno por uno** todos los archivos de la carpeta `vba/`:
-   - Todos los `mod*.bas` (18 módulos).
-4. Para los **eventos del libro** (`ThisWorkbook.cls`):
-   - Opción A (recomendada): en el editor, abra el objeto **ThisWorkbook** (doble clic en el
-     árbol izquierdo) y **pegue** el contenido de `vba/ThisWorkbook.cls` **debajo** de los
-     `Attribute...` (copie solo desde `Option Explicit` en adelante).
-   - Opción B: Importar `ThisWorkbook.cls` directamente si su Excel lo permite.
+3. Importe **uno por uno SOLO** los `vba/mod*.bas` (18 módulos).
+   - **NO importe `ThisWorkbook.cls`.** Si lo importa, Excel crea un módulo
+     llamado **`ThisWorkbook1`** y los eventos NO se ejecutan (y aparecen
+     errores con las líneas `VERSION 1.0 CLASS / BEGIN / MultiUse = -1 / End`).
+4. Para los **eventos del libro**, el código **se PEGA, no se importa**:
+   - Si ya creó un módulo **`ThisWorkbook1`**: clic derecho sobre él en el árbol →
+     **Quitar `ThisWorkbook1`…** → cuando pregunte si exportar, elija **No**.
+   - En el árbol, bajo **Microsoft Excel Objetos**, doble clic en **`ThisWorkbook`**
+     (el verdadero, **sin número**).
+   - Abra `vba/ThisWorkbook_PEGAR_AQUI.txt`, copie **todo lo que está debajo de
+     `---- COPIE DESDE AQUÍ ----`** (empieza en `Option Explicit`) y **péguelo** ahí.
 5. Verifique que no haya errores: menú **Depuración → Compilar VBAProject**.
+
+> El archivo `vba/ThisWorkbook.cls` se conserva solo como referencia. Para instalar,
+> use `vba/ThisWorkbook_PEGAR_AQUI.txt` como se indica arriba.
 
 > Si al importar aparece *“No se puede obtener acceso al proyecto de VBA…”*, active:
 > **Archivo → Opciones → Centro de confianza → Configuración → Configuración de macros →
